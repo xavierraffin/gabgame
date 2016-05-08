@@ -13,16 +13,65 @@
   <script src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
 
   <script>
+  var offsetXMainWall = 400; 
+  var offsetYMainWall = 0;
+  var wallSize = 250;
+  var verticalDeformationOffset = 245;
+  var verticalDeformationXOffset = 140;
+
   function handleFileComplete(event) {
     document.getElementById("loading").style.display = "none";
 
     var c = document.getElementById("world");
     var ctx = c.getContext("2d");
 
-    if(event.item.id === 'assets/wall.png'){
+    if(event.item.id === 'assets/wall.jpg'){
 
-    ctx.drawImage(event.result, 0,0);
+    ctx.drawImage(event.result, offsetXMainWall,0+offsetYMainWall, wallSize, wallSize);
+    ctx.drawImage(event.result, wallSize+offsetXMainWall,0+offsetYMainWall, wallSize, wallSize);
+    ctx.drawImage(event.result, 2*wallSize+offsetXMainWall,0+offsetYMainWall, wallSize, wallSize);
+    ctx.drawImage(event.result, 3*wallSize+offsetXMainWall,0+offsetYMainWall, wallSize, wallSize);
+    ctx.drawImage(event.result, 4*wallSize+offsetXMainWall,0+offsetYMainWall, wallSize, wallSize);
 
+    ctx.drawImage(event.result, offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, wallSize+offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, 3*wallSize+offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+
+    /* Left wall*/
+
+    ctx.transform(1,0,0,1,verticalDeformationXOffset,verticalDeformationOffset);
+    ctx.transform(1,-1.9,0,1,0,0);
+    ctx.transform(0.4,0,0,1,0,0);
+    ctx.drawImage(event.result, offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall-wallSize,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall,0+offsetYMainWall+2*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall-wallSize,0+offsetYMainWall+2*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall-2*wallSize,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall-2*wallSize,0+offsetYMainWall+2*wallSize, wallSize, wallSize);
+    ctx.transform(2.5,0,0,1,0,0);
+    ctx.transform(1,1.9,0,1,0,0);
+    ctx.transform(1,0,0,1,-verticalDeformationXOffset,-verticalDeformationOffset);
+
+    }
+    if(event.item.id === 'assets/door.jpg'){
+    ctx.drawImage(event.result, 2*wallSize+offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    }
+    if(event.item.id === 'assets/window.jpg'){
+    ctx.drawImage(event.result, 4*wallSize+offsetXMainWall,0+offsetYMainWall+wallSize, wallSize, wallSize);
+    }
+    if(event.item.id === 'assets/floor.png'){
+    ctx.transform(1,0,0,1,wallSize-50,120);
+    ctx.transform(1,0,-0.525,1,0,0);
+    ctx.transform(1,0,0,0.75,0,0);
+    ctx.drawImage(event.result, offsetXMainWall, offsetYMainWall+2*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, wallSize+offsetXMainWall, offsetYMainWall+2*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall, offsetYMainWall+3*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, wallSize+offsetXMainWall, offsetYMainWall+3*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, offsetXMainWall, offsetYMainWall+4*wallSize, wallSize, wallSize);
+    ctx.drawImage(event.result, wallSize+offsetXMainWall, offsetYMainWall+4*wallSize, wallSize, wallSize);
+    ctx.transform(1,0,0,1/0.75,0,0);
+    ctx.transform(1,0,0.525,1,0,0);
+    ctx.transform(1,0,0,1,-wallSize+50,-120);
     }
   }
 
@@ -31,9 +80,10 @@
     preload.addEventListener("fileload", handleFileComplete);
     preload.loadFile("config.json");
     preload.loadFile("levels/level1.json");
-    preload.loadFile("assets/wall.png");
+    preload.loadFile("assets/wall.jpg"); /*http://textures.christopherjonhewitt.com/medieval-2/*/
     preload.loadFile("assets/floor.png");
-    preload.loadFile("assets/door.png");
+    preload.loadFile("assets/door.jpg");
+    preload.loadFile("assets/window.jpg");
     preload.loadFile("assets/avatar.png");
     preload.loadFile("assets/sounds/ambiance.mp3");
     preload.loadFile("assets/sounds/door.mp3");
