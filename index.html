@@ -9,11 +9,46 @@
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+
+  <script src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
+
+  <script>
+  function handleFileComplete(event) {
+    document.getElementById("loading").style.display = "none";
+
+    var c = document.getElementById("world");
+    var ctx = c.getContext("2d");
+
+    if(event.item.id === 'assets/wall.png'){
+
+    ctx.drawImage(event.result, 0,0);
+
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function(event) { 
+    var preload = new createjs.LoadQueue();
+    preload.addEventListener("fileload", handleFileComplete);
+    preload.loadFile("config.json");
+    preload.loadFile("levels/level1.json");
+    preload.loadFile("assets/wall.png");
+    preload.loadFile("assets/floor.png");
+    preload.loadFile("assets/door.png");
+    preload.loadFile("assets/avatar.png");
+    preload.loadFile("assets/sounds/ambiance.mp3");
+    preload.loadFile("assets/sounds/door.mp3");
+  });
+  </script>
+
 </head>
 
-<body>
+<body style="margin:0;padding:0;overflow:hidden;">
 
-le donjon
+<div id="loading">Chargement en cours ... </div>
+
+<canvas id="world" width="1920" height="1080" style="border:0px;">
+Ce navigateur ne supporte pas HTML5 canvas
+</canvas>
 
 </body>
 </html>
